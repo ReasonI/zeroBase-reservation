@@ -1,6 +1,7 @@
 package zerobase.reservation.model;
 
 import lombok.*;
+import zerobase.reservation.model.constants.StoreStatus;
 import zerobase.reservation.persist.entity.Store;
 
 @Getter
@@ -10,6 +11,8 @@ import zerobase.reservation.persist.entity.Store;
 @Builder
 public class StoreDto {
 
+    private long id;
+
     private String name;
     private String location;
 
@@ -17,14 +20,17 @@ public class StoreDto {
     private double lon;
 
     private String explanation;
+    private StoreStatus storeStatus;
 
-    public static StoreDto fromEntity(Store storeEntity){
+    public static StoreDto fromEntity(Store store){
         return StoreDto.builder()
-                .name(storeEntity.getName())
-                .location(storeEntity.getLocation())
-                .lat(storeEntity.getLat())
-                .lon(storeEntity.getLon())
-                .explanation(storeEntity.getExplanation())
+                .id(store.getId())
+                .name(store.getName())
+                .location(store.getLocation())
+                .lat(store.getLat())
+                .lon(store.getLon())
+                .explanation(store.getExplanation())
+                .storeStatus(store.getStoreStatus())
                 .build();
     }
 }

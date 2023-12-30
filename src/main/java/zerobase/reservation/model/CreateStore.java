@@ -27,6 +27,7 @@ public class CreateStore {
     @AllArgsConstructor
     @Builder
     public static class Response {
+        private long id;
         private String name;
         private String location;
 
@@ -37,6 +38,7 @@ public class CreateStore {
 
         public static Response from(StoreDto storeDto){
             return Response.builder()
+                    .id(storeDto.getId())
                     .name(storeDto.getName())
                     .location(storeDto.getLocation())
                     .lat(storeDto.getLat())

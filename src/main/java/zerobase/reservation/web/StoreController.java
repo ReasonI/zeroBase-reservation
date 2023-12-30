@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.model.CreateStore;
+import zerobase.reservation.model.UpdateStore;
 import zerobase.reservation.service.StoreService;
 
-// 0/5
+// 2/5
 @RestController
 @RequiredArgsConstructor
 public class StoreController {
@@ -34,20 +35,19 @@ public class StoreController {
     /**
      * 상점 수정
      */
-    @PutMapping("/store")
-    public ResponseEntity<?> updateStore() {
-        return null;
+    @PutMapping("/store/{storeId}")
+    public UpdateStore.Response updateStore(@PathVariable("storeId") long id,@RequestBody @Valid UpdateStore.Request request) {
+        return UpdateStore.Response.from(
+                storeService.updateStore(id,request));
     }
 
 
     /**
      * 상점 삭제
-     *
-     * @return
      */
 
-    @DeleteMapping("/store/{storeName}")
-    public ResponseEntity<?> deleteStore() {
+    @DeleteMapping("/store/{storeId}")
+    public ResponseEntity<?> deleteStore(@PathVariable("storeId") long id) {
         return null;
     }
 
