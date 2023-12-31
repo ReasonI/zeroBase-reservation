@@ -45,7 +45,7 @@ public class Store {
     private StoreStatus storeStatus;
 
     @CreatedDate
-    @Column(insertable = true, updatable =false)
+    @Column(updatable =false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

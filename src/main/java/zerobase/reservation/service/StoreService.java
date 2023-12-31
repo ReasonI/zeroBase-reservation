@@ -1,21 +1,15 @@
 package zerobase.reservation.service;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import zerobase.reservation.exception.ReservationException;
 import zerobase.reservation.model.StoreDto;
 import zerobase.reservation.model.UpdateStore;
+import zerobase.reservation.model.constants.ErrorCode;
 import zerobase.reservation.model.constants.StoreStatus;
 import zerobase.reservation.persist.StoreRepository;
 import zerobase.reservation.persist.entity.Store;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -23,17 +17,16 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
 
-
     /**
      * 상점 정보 저장
      */
     @Transactional
     public StoreDto saveStore(String name, String location, double lat, double lon, String explanation) {
 
-        //존재여부 확인
+        //겹치는 상점명 확인
         boolean exists = this.storeRepository.existsByName(name);
         if (exists) {
-            throw new RuntimeException("already exists name -> " + name);
+            throw new ReservationException(ErrorCode.NAME_EXIST);
         }
 
         //저장
@@ -54,11 +47,10 @@ public class StoreService {
      * 상점 정보 수정
      */
     public StoreDto updateStore(long id, UpdateStore.Request request) {
-//        long id, String name, String location, double lat, double lon, String explanation, StoreStatus storeStatus
         //lat, lon, explanation, storestatus null값 확인
         // null의 경우 db에서 데이터 가져와 전달
 
-        StoreDto store = StoreDto.fromEntity(storeRepository.readById(id));
+        StoreDto store = StoreDto.fromEntity(storeRepository.findById(id).orElseThrow(() -> new ReservationException(ErrorCode.STORE_NOT_FOUND)));
         if (request.getLat() == 0){
             request.setLat(store.getLat());
         }
@@ -91,6 +83,29 @@ public class StoreService {
     /**
      * 상점 삭제
      */
+    @Transactional
+    public StoreDto deleteStore(long id){
+
+        StoreDto store = StoreDto.fromEntity(storeRepository.findById(id)
+                .orElseThrow(() -> new ReservationException(ErrorCode.STORE_NOT_FOUND)));
+
+        //파트너 권한 확인
+        store.setStoreStatus(StoreStatus.DELETE);
+
+        return StoreDto.fromEntity(
+                storeRepository.save(Store.builder()
+                        .id(id)
+                        .name(store.getName())
+                        .location(store.getLocation())
+                        .lat(store.getLat())
+                        .lon(store.getLon())
+                        .explanation(store.getExplanation())
+                        .storeStatus(store.getStoreStatus())
+                        .build()
+
+                ));
+
+    }
 
 
 }

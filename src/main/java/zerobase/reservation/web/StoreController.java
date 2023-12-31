@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.model.CreateStore;
+import zerobase.reservation.model.DeleteStore;
 import zerobase.reservation.model.UpdateStore;
 import zerobase.reservation.service.StoreService;
 
@@ -38,7 +39,8 @@ public class StoreController {
     @PutMapping("/store/{storeId}")
     public UpdateStore.Response updateStore(@PathVariable("storeId") long id,@RequestBody @Valid UpdateStore.Request request) {
         return UpdateStore.Response.from(
-                storeService.updateStore(id,request));
+                storeService.updateStore(id,request)
+        );
     }
 
 
@@ -47,8 +49,10 @@ public class StoreController {
      */
 
     @DeleteMapping("/store/{storeId}")
-    public ResponseEntity<?> deleteStore(@PathVariable("storeId") long id) {
-        return null;
+    public DeleteStore.Response deleteStore(@PathVariable("storeId") long id) {
+        return DeleteStore.Response.from(
+                storeService.deleteStore(id)
+        );
     }
 
     /**

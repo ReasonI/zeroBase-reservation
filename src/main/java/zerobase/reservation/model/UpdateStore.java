@@ -2,10 +2,8 @@ package zerobase.reservation.model;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 import zerobase.reservation.model.constants.StoreStatus;
 
-@DynamicUpdate
 public class UpdateStore {
 
     @Getter
