@@ -3,6 +3,8 @@ package zerobase.reservation.web;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.model.CreateStore;
 import zerobase.reservation.model.DeleteStore;
@@ -20,7 +22,9 @@ public class StoreController {
      * 상점 등록
      * body : name, location, lat, lon, explanation
      */
+
     @PostMapping("/store")
+    @PreAuthorize("hasRole('WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
     public CreateStore.Response addStore(@RequestBody @Valid CreateStore.Request request) {
         return CreateStore.Response.from(
                 storeService.saveStore(
@@ -37,6 +41,7 @@ public class StoreController {
      * 상점 수정
      */
     @PutMapping("/store/{storeId}")
+    @PreAuthorize("hasRole('WRITE')")
     public UpdateStore.Response updateStore(@PathVariable("storeId") long id,@RequestBody @Valid UpdateStore.Request request) {
         return UpdateStore.Response.from(
                 storeService.updateStore(id,request)
@@ -49,6 +54,7 @@ public class StoreController {
      */
 
     @DeleteMapping("/store/{storeId}")
+    @PreAuthorize("hasRole('WRITE')")
     public DeleteStore.Response deleteStore(@PathVariable("storeId") long id) {
         return DeleteStore.Response.from(
                 storeService.deleteStore(id)
