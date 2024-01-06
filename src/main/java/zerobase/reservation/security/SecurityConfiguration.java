@@ -42,11 +42,6 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//                .formLogin(formLogin -> formLogin
-//                        .loginPage("/login")
-//                        .permitAll()
-//                )
-//                .rememberMe(Customizer.withDefaults());
 
         return http.build();
     }

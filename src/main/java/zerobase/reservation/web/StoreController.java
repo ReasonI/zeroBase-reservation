@@ -4,14 +4,15 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import zerobase.reservation.model.CreateStore;
-import zerobase.reservation.model.DeleteStore;
-import zerobase.reservation.model.UpdateStore;
+import zerobase.reservation.model.store.CreateStore;
+import zerobase.reservation.model.store.DeleteStore;
+import zerobase.reservation.model.store.UpdateStore;
 import zerobase.reservation.service.StoreService;
 
 // 2/5
+//TODO
+// validation check!!
 @RestController
 @RequiredArgsConstructor
 public class StoreController {

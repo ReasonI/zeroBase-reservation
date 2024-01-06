@@ -59,12 +59,6 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-//    public Authentication getPartnerAuthentication(String jwt) {
-//
-//        UserDetails userDetails = this.partnerService.loadUserByUsername(this.getUsername(jwt));
-//
-//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-//    }
     public String getUsername(String token) {
         return this.parseClaims(token).getSubject();
     }

@@ -1,4 +1,4 @@
-package zerobase.reservation.model;
+package zerobase.reservation.model.store;
 
 import lombok.*;
 import zerobase.reservation.model.constants.StoreStatus;

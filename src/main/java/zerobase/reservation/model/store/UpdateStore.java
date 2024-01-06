@@ -1,9 +1,10 @@
-package zerobase.reservation.model;
+package zerobase.reservation.model.store;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import zerobase.reservation.model.constants.StoreStatus;
 
-public class CreateStore {
+public class UpdateStore {
 
     @Getter
     @Setter
@@ -19,6 +20,8 @@ public class CreateStore {
         private double lon;
 
         private String explanation;
+
+        private StoreStatus storeStatus;
     }
 
     @Getter
@@ -26,7 +29,7 @@ public class CreateStore {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class Response {
+    public static class Response{
         private long id;
         private String name;
         private String location;
@@ -35,17 +38,18 @@ public class CreateStore {
         private double lon;
 
         private String explanation;
+        private StoreStatus storeStatus;
 
-        public static Response from(StoreDto storeDto){
-            return Response.builder()
+        public static UpdateStore.Response from(StoreDto storeDto){
+            return UpdateStore.Response.builder()
                     .id(storeDto.getId())
                     .name(storeDto.getName())
                     .location(storeDto.getLocation())
                     .lat(storeDto.getLat())
                     .lon(storeDto.getLon())
                     .explanation(storeDto.getExplanation())
+                    .storeStatus(storeDto.getStoreStatus())
                     .build();
         }
     }
-
 }
