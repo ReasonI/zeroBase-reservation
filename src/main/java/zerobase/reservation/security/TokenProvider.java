@@ -11,7 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import zerobase.reservation.service.MemberService;
+import zerobase.reservation.service.PartnerService;
+import zerobase.reservation.service.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,8 @@ public class TokenProvider {
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // 1hour
     private static final String KEY_ROLES = "roles";
 
-    private final MemberService memberService;
+    private final UserService memberService;
+    private final PartnerService partnerService;
 
     @Value("{spring.jwt.secret}")
     private String secretKey;
@@ -56,6 +58,13 @@ public class TokenProvider {
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
+
+//    public Authentication getPartnerAuthentication(String jwt) {
+//
+//        UserDetails userDetails = this.partnerService.loadUserByUsername(this.getUsername(jwt));
+//
+//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+//    }
     public String getUsername(String token) {
         return this.parseClaims(token).getSubject();
     }
@@ -70,7 +79,6 @@ public class TokenProvider {
         try{
             return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
         }catch(ExpiredJwtException e){
-            //TODO
             return e.getClaims();
         }
     }

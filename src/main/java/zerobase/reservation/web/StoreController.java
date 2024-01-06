@@ -24,7 +24,7 @@ public class StoreController {
      */
 
     @PostMapping("/store")
-    @PreAuthorize("hasRole('WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
+    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
     public CreateStore.Response addStore(@RequestBody @Valid CreateStore.Request request) {
         return CreateStore.Response.from(
                 storeService.saveStore(
@@ -41,7 +41,7 @@ public class StoreController {
      * 상점 수정
      */
     @PutMapping("/store/{storeId}")
-    @PreAuthorize("hasRole('WRITE')")
+    @PreAuthorize("hasRole('PARTNER_WRITE')")
     public UpdateStore.Response updateStore(@PathVariable("storeId") long id,@RequestBody @Valid UpdateStore.Request request) {
         return UpdateStore.Response.from(
                 storeService.updateStore(id,request)

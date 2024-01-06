@@ -1,48 +1,44 @@
 package zerobase.reservation.model;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import zerobase.reservation.persist.entity.User;
+import zerobase.reservation.persist.entity.Partner;
 
 import java.util.List;
 
-public class Auth {
+public class PartnerAuth {
 
     @Data
-    public static class SignIn {
-        private String username;
+    public static class SignIn{
+        private String partnerName;
         private String password;
     }
 
     @Data
     @Getter
-    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     public static class SignUp{
-
         @NotNull
-        private String username;
+        private String partnerName;
         @NotNull
         private String password;
         private List<String> roles;
 
-        public User toEntity() {
-            return User.builder()
-                    .userName(this.username)
+        public Partner toEntity(){
+            return Partner.builder()
+                    .partnerName(this.partnerName)
                     .password(this.password)
                     .roles(this.roles)
                     .build();
         }
 
-        public SignUp fromEntity(User user) {
-
+        public SignUp fromEntity(Partner partner){
             return SignUp.builder()
-                    .username(user.getUsername())
-                    .password(user.getPassword())
-                    .roles(user.getRoles())
+                    .partnerName(partner.getPartnerName())
+                    .password(partner.getPassword())
+                    .roles(partner.getRoles())
                     .build();
         }
     }
