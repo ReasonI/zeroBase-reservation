@@ -24,7 +24,7 @@ public class TokenProvider {
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // 1hour
     private static final String KEY_ROLES = "roles";
 
-    private final UserService memberService;
+    private final UserService userService;
     private final PartnerService partnerService;
 
     @Value("{spring.jwt.secret}")
@@ -54,7 +54,7 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String jwt) {
 
-        UserDetails userDetails = this.memberService.loadUserByUsername(this.getUsername(jwt));
+        UserDetails userDetails = this.userService.loadUserByUsername(this.getUsername(jwt));
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }

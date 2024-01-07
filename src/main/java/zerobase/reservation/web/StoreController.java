@@ -15,6 +15,7 @@ import zerobase.reservation.service.StoreService;
 // validation check!!
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/store")
 public class StoreController {
 
     private final StoreService storeService;
@@ -24,7 +25,7 @@ public class StoreController {
      * body : name, location, lat, lon, explanation
      */
 
-    @PostMapping("/store")
+    @PostMapping
     @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
     public CreateStore.Response addStore(@RequestBody @Valid CreateStore.Request request) {
         return CreateStore.Response.from(
@@ -41,9 +42,9 @@ public class StoreController {
     /**
      * 상점 수정
      */
-    @PutMapping("/store/{storeId}")
+    @PutMapping("/{store-id}")
     @PreAuthorize("hasRole('PARTNER_WRITE')")
-    public UpdateStore.Response updateStore(@PathVariable("storeId") long id,@RequestBody @Valid UpdateStore.Request request) {
+    public UpdateStore.Response updateStore(@PathVariable("store-id") long id,@RequestBody @Valid UpdateStore.Request request) {
         return UpdateStore.Response.from(
                 storeService.updateStore(id,request)
         );
@@ -54,9 +55,9 @@ public class StoreController {
      * 상점 삭제
      */
 
-    @DeleteMapping("/store/{storeId}")
+    @DeleteMapping("/{store-id}")
     @PreAuthorize("hasRole('WRITE')")
-    public DeleteStore.Response deleteStore(@PathVariable("storeId") long id) {
+    public DeleteStore.Response deleteStore(@PathVariable("store-id") long id) {
         return DeleteStore.Response.from(
                 storeService.deleteStore(id)
         );
@@ -68,8 +69,8 @@ public class StoreController {
      * @param storeName
      * @return
      */
-    @GetMapping("/store/{storeName}")
-    public ResponseEntity<?> searchStore(@PathVariable String storeName) {
+    @GetMapping("/{store-id}")
+    public ResponseEntity<?> searchStore(@PathVariable("store-id") Long id) {
         return null;
     }
 

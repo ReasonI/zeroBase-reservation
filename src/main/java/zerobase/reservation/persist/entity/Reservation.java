@@ -8,7 +8,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import zerobase.reservation.model.constants.StoreStatus;
+import zerobase.reservation.model.constants.ReserveStatus;
+import zerobase.reservation.model.constants.VisitStatus;
 
 import java.time.LocalDateTime;
 
@@ -20,28 +21,30 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-@Entity(name = "STORE")
-public class Store {
+@Entity(name = "RESERVATION")
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String name;
+    @ManyToOne(targetEntity = Store.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 
-    private String location;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private double lat;
-    private double lon;
+    private LocalDateTime reservationTime;
 
-    @Column(length = 500)
-    private String explanation;
-
-
-    @ColumnDefault("'IN_USE'")
+    @ColumnDefault("'PENDING'")
     @Enumerated(EnumType.STRING)
-    private StoreStatus storeStatus;
+    private VisitStatus visitStatus;
+
+    @ColumnDefault("'PENDING'")
+    @Enumerated(EnumType.STRING)
+    private ReserveStatus reserveStatus;
 
     @CreatedDate
     @Column(updatable =false)
