@@ -18,7 +18,13 @@ public enum ErrorCode {
     USER_EXIST(HttpStatus.BAD_REQUEST,"이미 사용 중인 아이디 입니다."),
 
     //RESERVATION
-    RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 예약 입니다.");
+    RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 예약 입니다."),
+    EXPIRED_TIME(HttpStatus.BAD_REQUEST,"예약할 수 없는 시간 입니다."),
+
+    //
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 리뷰 입니다."),
+    BEFORE_VISIT(HttpStatus.BAD_REQUEST, "방문 전 입니다."),
+    REVIEW_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "이미 리뷰를 등록했습니다.");
 
     private final HttpStatus httpStatus;
     private final String description;

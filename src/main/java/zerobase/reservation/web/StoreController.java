@@ -19,11 +19,10 @@ public class StoreController {
 
     /**
      * 상점 등록
-     * body : name, location, lat, lon, explanation
      */
 
     @PostMapping
-    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
+    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 partner만 등록 가능
     public CreateStore.Response addStore(@RequestBody @Valid CreateStore.Request request) {
         return CreateStore.Response.from(
                 storeService.saveStore(

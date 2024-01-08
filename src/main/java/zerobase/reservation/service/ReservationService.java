@@ -37,7 +37,11 @@ public class ReservationService {
 
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new ReservationException(ErrorCode.STORE_NOT_FOUND));
-        //TODO : 현재 시간을 지난 reservationTime validate
+
+        //예약 가능 시간은 현재로 부터 10분 전까지
+        if(request.getReservationTime().isBefore(LocalDateTime.now().minusMinutes(10))){
+            throw new ReservationException(ErrorCode.EXPIRED_TIME);
+        }
 
         return ReservationDto.fromEntity(
                 reservationRepository.save(
@@ -69,7 +73,6 @@ public class ReservationService {
 
         //예약 시간 10분 전
         if (LocalDateTime.now().isBefore(reservation.getReservationTime().plusMinutes(10))) {
-            System.out.println("Before");
             return ReservationDto.fromEntity(
                     reservationRepository.save(
                             Reservation.builder()
