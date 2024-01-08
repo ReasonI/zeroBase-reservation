@@ -21,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TokenProvider {
 
+    //identify로 user, partner 식별
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // 1hour
     private static final String KEY_ROLES = "roles";
 
@@ -36,9 +37,9 @@ public class TokenProvider {
      * @param roles
      * @return
      */
-    public String generateToken(String username, List<String> roles) {
+    public String generateToken(String identify, String username, List<String> roles) {
         //사용자의 권한 정보 저장
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().setSubject(username).setIssuer(identify);
         claims.put(KEY_ROLES, roles);
 
         var now = new Date();
@@ -57,6 +58,19 @@ public class TokenProvider {
         UserDetails userDetails = this.userService.loadUserByUsername(this.getUsername(jwt));
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    // identify로 식별하는 getPartnerAuth 추가
+    public Authentication getPartnerAuthentication(String jwt) {
+        System.out.println(this.getUsername(jwt));
+        UserDetails userDetails =this.partnerService.loadUserByUsername(this.getUsername(jwt));
+
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+
+    public String getIdentify(String token) {
+        return this.parseClaims(token).getIssuer();
     }
 
     public String getUsername(String token) {

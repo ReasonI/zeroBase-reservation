@@ -20,6 +20,8 @@ public class UserController {
     private final UserService userService;
     private final TokenProvider tokenProvider;
 
+    private static final String identify = "USER";
+
     /**
      * 회원가입
      * @param request
@@ -42,8 +44,9 @@ public class UserController {
     public ResponseEntity<?> signin(@RequestBody Auth.SignIn request) {
         //id,pw 일치하는지 확인
         var member = this.userService.authenticate(request);
+
         //token 발급
-        var token = this.tokenProvider.generateToken(member.getUsername(), member.getRoles());
+        var token = this.tokenProvider.generateToken(identify, member.getUsername(), member.getRoles());
         return ResponseEntity.ok(token);
     }
 }

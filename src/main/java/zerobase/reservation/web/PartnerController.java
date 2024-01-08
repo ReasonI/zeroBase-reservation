@@ -20,6 +20,9 @@ public class PartnerController {
     private final PartnerService partnerService;
     private final TokenProvider tokenProvider;
 
+    private static final String identify = "PARTNER";
+
+
     /**
      * 점주 회원가입
      */
@@ -36,7 +39,7 @@ public class PartnerController {
     public ResponseEntity<?> signin(@RequestBody PartnerAuth.SignIn request) {
         var partner = this.partnerService.authenticate(request);
 
-        var token = this.tokenProvider.generateToken(partner.getUsername(), partner.getRoles());
+        var token = this.tokenProvider.generateToken(identify, partner.getUsername(), partner.getRoles());
 
         return ResponseEntity.ok(token);
 

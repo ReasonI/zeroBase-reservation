@@ -10,9 +10,6 @@ import zerobase.reservation.model.store.DeleteStore;
 import zerobase.reservation.model.store.UpdateStore;
 import zerobase.reservation.service.StoreService;
 
-// 2/5
-//TODO
-// validation check!!
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/store")
@@ -26,7 +23,7 @@ public class StoreController {
      */
 
     @PostMapping
-//    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
+    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
     public CreateStore.Response addStore(@RequestBody @Valid CreateStore.Request request) {
         return CreateStore.Response.from(
                 storeService.saveStore(
@@ -56,7 +53,7 @@ public class StoreController {
      */
 
     @DeleteMapping("/{store-id}")
-    @PreAuthorize("hasRole('WRITE')")
+    @PreAuthorize("hasRole('PARTNER_WRITE')")
     public DeleteStore.Response deleteStore(@PathVariable("store-id") long id) {
         return DeleteStore.Response.from(
                 storeService.deleteStore(id)
