@@ -2,6 +2,7 @@ package zerobase.reservation.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.model.PartnerAuth;
@@ -49,6 +50,8 @@ public class PartnerController {
      * 예약 승인/거절
      */
     @PutMapping("/reservation/{reservation-id}")
+    @PreAuthorize("hasRole('PARTNER_WRITE')")
+
     public CheckReservation.Response checkReservation(@PathVariable("reservation-id") Long reservationId,
                                                       @RequestBody CheckReservation.Request request,
                                                       Principal principal){
