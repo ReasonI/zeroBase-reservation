@@ -45,9 +45,6 @@ public class PartnerController {
 
     }
 
-    /**
-     * 예약 신청된 목록
-     */
 
     /**
      * 예약 승인/거절
