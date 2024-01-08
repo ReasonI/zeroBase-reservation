@@ -15,7 +15,10 @@ public enum ErrorCode {
     //USER, PARTNER
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 ID 입니다."),
     PASSWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "비밀번호가 일치하지 않습니다."),
-    USER_EXIST(HttpStatus.BAD_REQUEST,"이미 사용 중인 아이디 입니다.");
+    USER_EXIST(HttpStatus.BAD_REQUEST,"이미 사용 중인 아이디 입니다."),
+
+    //RESERVATION
+    RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 예약 입니다.");
 
     private final HttpStatus httpStatus;
     private final String description;

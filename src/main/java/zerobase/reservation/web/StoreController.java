@@ -26,7 +26,7 @@ public class StoreController {
      */
 
     @PostMapping
-    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
+//    @PreAuthorize("hasRole('PARTNER_WRITE')") // write 권한을 가지고 있는 owner만 등록 가능
     public CreateStore.Response addStore(@RequestBody @Valid CreateStore.Request request) {
         return CreateStore.Response.from(
                 storeService.saveStore(
@@ -44,9 +44,9 @@ public class StoreController {
      */
     @PutMapping("/{store-id}")
     @PreAuthorize("hasRole('PARTNER_WRITE')")
-    public UpdateStore.Response updateStore(@PathVariable("store-id") long id,@RequestBody @Valid UpdateStore.Request request) {
+    public UpdateStore.Response updateStore(@PathVariable("store-id") long id, @RequestBody @Valid UpdateStore.Request request) {
         return UpdateStore.Response.from(
-                storeService.updateStore(id,request)
+                storeService.updateStore(id, request)
         );
     }
 
@@ -65,9 +65,6 @@ public class StoreController {
 
     /**
      * 상점 상세정보 조회
-     *
-     * @param storeName
-     * @return
      */
     @GetMapping("/{store-id}")
     public ResponseEntity<?> searchStore(@PathVariable("store-id") Long id) {

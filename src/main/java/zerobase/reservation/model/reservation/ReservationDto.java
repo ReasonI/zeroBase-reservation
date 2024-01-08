@@ -25,6 +25,7 @@ public class ReservationDto {
     private ReserveStatus reserveStatus;
 
     private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
 
     public static ReservationDto fromEntity(Reservation reservation){
         return ReservationDto.builder()
@@ -35,6 +36,7 @@ public class ReservationDto {
                 .visitStatus(reservation.getVisitStatus())
                 .reserveStatus(reservation.getReserveStatus())
                 .createdTime(reservation.getCreatedAt())
+                .updatedTime(reservation.getUpdatedAt())
                 .build();
     }
 }

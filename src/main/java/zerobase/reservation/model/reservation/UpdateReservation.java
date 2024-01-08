@@ -2,18 +2,17 @@ package zerobase.reservation.model.reservation;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import zerobase.reservation.model.constants.VisitStatus;
 
 import java.time.LocalDateTime;
 
-public class CreateReservation {
-
+public class UpdateReservation {
     @Getter
     @Setter
     public static class Request {
 
         @NotNull
-        private LocalDateTime reservationTime;
-
+        private VisitStatus visitStatus;
     }
 
     @Getter
@@ -22,17 +21,19 @@ public class CreateReservation {
     @AllArgsConstructor
     @Builder
     public static class Response {
+
         private Long id;
 
-        private LocalDateTime reservationTime;
-        private LocalDateTime createdAt;
+        private VisitStatus visitStatus;
+        private LocalDateTime updatedAt;
 
         public static Response from(ReservationDto reservationDto) {
             return Response.builder()
                     .id(reservationDto.getId())
-                    .reservationTime(reservationDto.getReservationTime())
-                    .createdAt(reservationDto.getCreatedTime())
+                    .visitStatus(reservationDto.getVisitStatus())
+                    .updatedAt(reservationDto.getUpdatedTime())
                     .build();
         }
+
     }
 }

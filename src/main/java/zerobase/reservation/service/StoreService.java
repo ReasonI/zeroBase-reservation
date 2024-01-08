@@ -46,6 +46,7 @@ public class StoreService {
     /**
      * 상점 정보 수정
      */
+    @Transactional
     public StoreDto updateStore(long id, UpdateStore.Request request) {
         //lat, lon, explanation, storestatus null값 확인
         // null의 경우 db에서 데이터 가져와 전달
