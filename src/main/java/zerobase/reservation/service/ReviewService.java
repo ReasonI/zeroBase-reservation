@@ -16,7 +16,6 @@ import zerobase.reservation.persist.StoreRepository;
 import zerobase.reservation.persist.UserRepository;
 import zerobase.reservation.persist.entity.Reservation;
 import zerobase.reservation.persist.entity.Review;
-import zerobase.reservation.persist.entity.Store;
 import zerobase.reservation.persist.entity.User;
 
 import java.security.Principal;
@@ -29,7 +28,6 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final ReservationRepository reservationRepository;
-    private final StoreRepository storeRepository;
 
     /**
      * 리뷰 등록
